@@ -3,8 +3,8 @@ Contributors: fuzzguard
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=G8SPGAVH8RTBU
 tags: post, status, dashboard, type
 Requires at least: 3.9
-Tested up to: 4.6
-Stable tag: 1.2.1
+Tested up to: 4.7.3
+Stable tag: 1.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -42,6 +42,12 @@ Not currently.  This will be added in a a later version of the software.
 2. Configuring the Widget
 
 == Changelog ==
+
+= 1.3 =
+* Added 'All Categories' to category selection
+* Hide 'Categories' field on widget if no categories have been assigned to any posts.
+* Fixed post status now loading all custom and default types registered with 'get_post_stati()'
+* Fixed loading 'All' status'
 
 = 1.2.1 =
 * Tested with version 4.6 of Wordpress

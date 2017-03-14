@@ -3,7 +3,7 @@
  * Plugin Name: Post Status Dashboard
  * Plugin URI: http://www.fuzzguard.com.au/plugins/post-status-dashboard
  * Description: Used to display post status in the admin dashboard
- * Version: 1.2.1
+ * Version: 1.3
  * Author: Benjamin Guy
  * Author URI: http://www.fuzzguard.com.au
  * Text Domain: post-status-dashboard
@@ -61,7 +61,7 @@ function post_status_dashboard_widgets() {
 function post_status_dashboard_content() {
    # get saved data
     if( !$post_status_dashboard = get_option( 'post_status_dashboard' ) )
-        $post_status_dashboard = array('category' => 0, 'status' => 0);
+        $post_status_dashboard = array('category' => -1, 'status' => 'any');
 
 
     # default output
@@ -69,26 +69,26 @@ function post_status_dashboard_content() {
         '<h2 style="text-align:right">%s</h2>',
         __( 'Please, configure the widget ?' )
     );
-
-
+if ($post_status_dashboard['category'] >= 0 ) {
+	$category = '';
+} else {
+	$category = $post_status_dashboard['category'];
+}
 $posts_array = get_posts(array(
         'posts_per_page'   => 5,
-        'category'         => $post_status_dashboard['category'],
+		'category'         => $category,
         'orderby'          => 'post_date',
         'order'            => 'DESC',
         'post_type'        => 'post',
         'post_status'      => $post_status_dashboard['status']
 ));
 
-    # check if saved data contains content
-    $saved_category = isset( $post_status_dashboard['category'] ) 
-        ? $post_status_dashboard['category'] : false;
                 $today    = date( 'Y-m-d', current_time( 'timestamp' ) );
                 $tomorrow = date( 'Y-m-d', strtotime( '+1 day', current_time( 'timestamp' ) ) );
 
 
     # custom content saved by control callback, modify output
-    if( $saved_category && !empty($posts_array) ) {
+    if( !empty($posts_array) ) {
                 $output = '<div class="activity-block"><ul>';
                 foreach ( $posts_array as $post ) {
 
@@ -117,21 +117,22 @@ $posts_array = get_posts(array(
         __( 'No posts to load' )
     );
         }
-    echo "<div class='feature_post_class_wrap'>
-        <div class='feature_post_class_wrap'><label><strong>".__('Category', 'post-status-dashboard' ).":</strong> ".get_cat_name($post_status_dashboard['category'])."</label></div>
-        <div class='feature_post_class_wrap'><label><strong>".__('Status', 'post-status-dashboard' ).":</strong> ".$post_status_dashboard['status']."</label></div>
+    echo "<div class='feature_post_class_wrap'>";
+    if (!empty($post_status_dashboard['category'])) {
+    	echo "<div class='feature_post_class_wrap'><label><strong>".__('Category', 'post-status-dashboard' ).":</strong> ".get_cat_name($post_status_dashboard['category'])."</label></div>";
+    }
+    echo "<div class='feature_post_class_wrap'><label><strong>".__('Status', 'post-status-dashboard' ).":</strong> ".$post_status_dashboard['status']."</label></div>
         <label style='background:#ccc;'>$output</label>
     </div>
     ";
 
-#        echo '<p>Welcome to Custom Blog Theme! Need help? Contact the developer <a href="mailto:yourusername@gmail.com">here</a>. For WordPress Tutorials visit: <a href="http://www.wpbeginner.com" target="_blank">WPBeginner</a></p>';
 }
 
 function post_status_dashboard_handle()
 {
     # get saved data
     if( !$post_status_dashboard = get_option( 'post_status_dashboard' ) )
-        $post_status_dashboard = array('category' => 0, 'status' => 0);
+        $post_status_dashboard = array('category' => -1, 'status' => 'any');
 
 
 
@@ -146,34 +147,33 @@ function post_status_dashboard_handle()
 
     # set defaults  
     if( !isset( $post_status_dashboard['category'] ) )
-        $post_status_dashboard['category'] = '';
-
-    echo "<p><strong>".__('Select a Post Category and Status', 'post-status-dashboard' )."</strong></p>
-    <div class='feature_post_class_wrap'>
-        <label>".__('Category', 'post-status-dashboard' ).":</label>";
-    wp_dropdown_categories( array(
-        'orderby'            => 'name',
-        'order'              => 'ASC',
-        'selected'         => $post_status_dashboard['category'],
-        'name'             => 'post_status_dashboard[category]',
-        'taxonomy'           => 'category'
-    ) );
-    echo "</div>
-    <div class='feature_post_class_wrap'>
-        <label>".__('Status', 'post-status-dashboard' ).":</label>
-<select class='postform' id='post_status_dashboard[status]' name='post_status_dashboard[status]'>";
-
+        $post_status_dashboard['category'] = 'All';
+		$categories =     wp_dropdown_categories( array(
+        	'orderby'            => 'name',
+        	'order'              => 'ASC',
+        	'selected'         => $post_status_dashboard['category'],
+        	'name'             => 'post_status_dashboard[category]',
+        	'taxonomy'           => 'category',
+    		'show_option_all'    =>  __('All Categories', 'post-status-dashboard'),
+    		'hide_empty'         => 1,
+			'hide_if_empty'      => 1,
+			'echo'				 => 0
+    	) );
+		$post_status = get_post_stati();
+		$post_status['any'] = 'Any';
+    echo "<p><strong>".__('Select a options below', 'post-status-dashboard' )."</strong></p>";
+	if (!empty($categories)) {
+    echo "<div class='feature_post_class_wrap'>
+        <label style='display: inline-block; width: 75px;'>".__('Category', 'post-status-dashboard' ).":</label>".$categories."</div>";
+	}
+    echo" <div class='feature_post_class_wrap'>
+        <label style='display: inline-block; width: 75px;'>".__('Status', 'post-status-dashboard' ).":</label>
+<select style='margin-left: -2px;' class='postform' id='post_status_dashboard[status]' name='post_status_dashboard[status]'>";
+    foreach ($post_status as $key => $value) {
 ?>
-    <option <?php if ($post_status_dashboard['status']=='publish') { echo "selected='selected'"; } ?> value='publish' class='level-0'>Publish</option>
-    <option <?php if ($post_status_dashboard['status']=='pending') { echo "selected='selected'"; } ?>  value='pending' class='level-0'>Pending</option>
-    <option <?php if ($post_status_dashboard['status']=='draft') { echo "selected='selected'"; } ?> value='draft' class='level-0'>Draft</option>
-    <option <?php if ($post_status_dashboard['status']=='auto-draft') { echo "selected='selected'"; } ?>  value='auto-draft' class='level-0'>Auto-Draft</option>
-    <option <?php if ($post_status_dashboard['status']=='future') { echo "selected='selected'"; } ?>  value='future' class='level-0'>Future</option>
-    <option <?php if ($post_status_dashboard['status']=='private') { echo "selected='selected'"; } ?>  value='private' class='level-0'>Private</option>
-    <option <?php if ($post_status_dashboard['status']=='inherit') { echo "selected='selected'"; } ?>  value='inherit' class='level-0'>Inherit</option>
-    <option <?php if ($post_status_dashboard['status']=='trash') { echo "selected='selected'"; } ?>  value='trash' class='level-0'>Trash</option>
-    <option <?php if ($post_status_dashboard['status']=='any') { echo "selected='selected'"; } ?>  value='any' class='level-0'>Any</option>
+    <option <?php if ($post_status_dashboard['status']==$key) { echo "selected='selected'"; } ?> value='<?php echo $key; ?>' class='level-0'><?php echo $value; ?></option>
 <?php
+}
 echo "</select></div>";
 }
 
