@@ -13,14 +13,12 @@ if ( ! function_exists( 'is_admin' ) ) {
 //if uninstall not called from WordPress exit
 if ( !defined( 'WP_UNINSTALL_PLUGIN' ) ) 
     exit();
+	
+    require('post-status-dashboard.php');
+    
+    $postStatusDashOption = new postStatusDash();
 
-$option_name = 'post_status_dashboard';
+delete_option( $postStatusDashOption->postStatusOption );
 
-delete_option( $option_name );
-
-//delete_post_meta_by_key( $option_name );
-
-// For site options in multisite
-//delete_site_option( $option_name );  
 
 ?>

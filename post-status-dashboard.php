@@ -42,6 +42,8 @@ if ( ! function_exists( 'is_admin' ) ) {
 
 class postStatusDash {
 
+	     public $postStatusOption = 'post_status_dashboard';
+	
         /**
         * Loads localization files for each language
         * @since 1.4
@@ -60,7 +62,7 @@ function post_status_dashboard_widgets() {
 
 function post_status_dashboard_content() {
    # get saved data
-    if( !$post_status_dashboard = get_option( 'post_status_dashboard' ) )
+    if( !$post_status_dashboard = get_option( $this->postStatusOption ) )
         $post_status_dashboard = array('category' => -1, 'status' => 'any');
 
 
@@ -131,7 +133,7 @@ $posts_array = get_posts(array(
 function post_status_dashboard_handle()
 {
     # get saved data
-    if( !$post_status_dashboard = get_option( 'post_status_dashboard' ) )
+    if( !$post_status_dashboard = get_option( $this->postStatusOption ) )
         $post_status_dashboard = array('category' => -1, 'status' => 'any');
 
 
@@ -142,7 +144,7 @@ function post_status_dashboard_handle()
         $post_status_dashboard['category'] = absint( $_POST['post_status_dashboard']['category'] );
         $post_status_dashboard['status'] = sanitize_text_field( $_POST['post_status_dashboard']['status'] );
         # save update
-        update_option( 'post_status_dashboard', $post_status_dashboard );
+        update_option( $this->postStatusOption, $post_status_dashboard );
     }
 
     # set defaults  
