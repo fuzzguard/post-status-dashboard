@@ -69,7 +69,7 @@ function post_status_dashboard_content() {
         '<h2 style="text-align:right">%s</h2>',
         __( 'Please, configure the widget ?' )
     );
-if ($post_status_dashboard['category'] >= 0 ) {
+if ($post_status_dashboard['category'] <= 0 ) {
 	$category = '';
 } else {
 	$category = $post_status_dashboard['category'];
