@@ -1,10 +1,10 @@
 === Post Status Dashboard ===
 Contributors: fuzzguard
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=G8SPGAVH8RTBU
-tags: post, status, dashboard, type
+tags: post, status, dashboard, type, widget, dash, admin, panel, front
 Requires at least: 3.9
 Tested up to: 4.7.3
-Stable tag: 1.3
+Stable tag: 1.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -42,6 +42,14 @@ Not currently.  This will be added in a a later version of the software.
 2. Configuring the Widget
 
 == Changelog ==
+
+= 1.4 =
+* Added in ability to add multiple widgets with different 'Status' and 'Category'.  Greatly expands use of the plugin for monitoring multiple types of posts
+* Added new option "$this->postStatusOption.'_additionWidgets'"
+* Added uninstall for option "$this->postStatusOption.'_additionWidgets'"
+* Updated .pot files
+* Updated screenshots for plugin directory
+* Next version will include ability to change Dashboard Widget titles
 
 = 1.3 =
 * Added 'All Categories' to category selection

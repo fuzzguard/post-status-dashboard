@@ -19,6 +19,7 @@ if ( !defined( 'WP_UNINSTALL_PLUGIN' ) )
     $postStatusDashOption = new postStatusDash();
 
 delete_option( $postStatusDashOption->postStatusOption );
+delete_option( $postStatusDashOption->postStatusOption.'_additionWidgets');
 
 
 ?>
