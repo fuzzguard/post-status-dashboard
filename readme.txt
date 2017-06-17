@@ -3,8 +3,8 @@ Contributors: fuzzguard
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=G8SPGAVH8RTBU
 tags: post, status, dashboard, type, widget, dash, admin, panel, front
 Requires at least: 3.9
-Tested up to: 4.7.3
-Stable tag: 1.4
+Tested up to: 4.8
+Stable tag: 1.4.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -53,6 +53,10 @@ NOTE:  You cannot remove the Initial Post Status Dashboard widget.  You must dea
 3. Multiple Widgets
 
 == Changelog ==
+
+= 1.4.1 =
+* Added in 'Confirm' function for 'Remove' PSD widget
+* Added in 'Confirm function for 'Add' PSD widget
 
 = 1.4 =
 * Added in ability to add multiple widgets with different 'Status' and 'Category'.  Greatly expands use of the plugin for monitoring multiple types of posts

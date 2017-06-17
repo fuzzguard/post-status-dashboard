@@ -3,7 +3,7 @@
  * Plugin Name: Post Status Dashboard
  * Plugin URI: http://www.fuzzguard.com.au/plugins/post-status-dashboard
  * Description: Used to display post status in the admin dashboard
- * Version: 1.4
+ * Version: 1.4.1
  * Author: Benjamin Guy
  * Author URI: http://www.fuzzguard.com.au
  * Text Domain: post-status-dashboard
@@ -147,7 +147,7 @@ function post_status_dashboard_content_additional($var, $args) {
 					);
 		}
 		echo "<div class='feature_post_class_wrap'>";
-		echo '<div style="float: right;"><a href="?PSD_addNewWidget=Y">'.__('Add', 'post-status-dashboard' ).'</a> | <a href="?PSD_removeWidget=Y&PSD_id='.$id.'">'.__('Remove', 'post-status-dashboard' ).'</a></div>';
+		echo '<div style="float: right;"><a href="?PSD_addNewWidget=Y" onclick="if (!confirm(\'Add a new PSD Widget?\')) { return false; }">'.__('Add', 'post-status-dashboard' ).'</a> | <a href="?PSD_removeWidget=Y&PSD_id='.$id.'" onclick="if (!confirm(\'Are you sure you want to remove this PSD Widget?\')) { return false; }">'.__('Remove', 'post-status-dashboard' ).'</a></div>';
 		if (!empty($post_status_dashboard['category']) && $post_status_dashboard['category'] != -1) {
 			echo "<div class='feature_post_class_wrap'><label><strong>".__('Category', 'post-status-dashboard' ).":</strong> ".get_cat_name($post_status_dashboard['category'])."</label></div>";
 		}
@@ -218,7 +218,7 @@ $posts_array = get_posts(array(
     );
         }
     echo "<div class='feature_post_class_wrap'>";
-    echo '<div style="float: right;"><a href="?PSD_addNewWidget=Y">'.__('Add', 'post-status-dashboard' ).'</a></div>';
+    echo '<div style="float: right;"><a href="?PSD_addNewWidget=Y" onclick="if (!confirm(\'Add a new PSD Widget?\')) { return false; }">'.__('Add', 'post-status-dashboard' ).'</a></div>';
     if (!empty($post_status_dashboard['category'])  && $post_status_dashboard['category'] != -1) {
     	echo "<div class='feature_post_class_wrap'><label><strong>".__('Category', 'post-status-dashboard' ).":</strong> ".get_cat_name($post_status_dashboard['category'])."</label></div>";
     }
