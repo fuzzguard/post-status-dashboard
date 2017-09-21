@@ -3,7 +3,7 @@ Contributors: fuzzguard
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=G8SPGAVH8RTBU
 tags: post, status, dashboard, type, widget, dash, admin, panel, front
 Requires at least: 3.9
-Tested up to: 4.8
+Tested up to: 4.8.2
 Stable tag: 1.4.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
